@@ -1,20 +1,20 @@
 const std = @import("std");
 const std_writer = std.io.getStdOut().writer();
 
-const trix_version: []const u8 = "0.1.0";
+const version: []const u8 = "0.1.0";
 
 const Command = enum {
     // common
     install,
     list,
     uninstall,
-    info,   // Kiểm tra thông tin của một pack (vd: trix info node)
-    moveto,    // Chuyển một pack đến một version được chỉ định (vd: trix move-to jvm@21.0 | trix move-to jvm@lasted)
+    info,
+    moveto,
     
 
     // self commands
-    version,    // Kiểm tra phiên bản
-    upgrade,    // Cập nhật lên phiên bản mới nhất hoặc chỉ định (vd: trix upgrade | trix upgrade @1.2)
+    version,
+    upgrade,
     help,
 
     const Self = @This();
@@ -32,21 +32,21 @@ const Command = enum {
 };
 
 fn showVersion() void {
-    std_writer.print("trix package manager {s}\n", .{trix_version}) catch unreachable;
+    std_writer.print("pilo package manager {s}\n", .{version}) catch unreachable;
 }
 
 
 fn showHelpMenu() void {
     std_writer.writeAll(
-        \\Usage: trix [command] [options]
-        \\  install     Install a package (ex: trix install <package name>)
+        \\Usage: pilo [command] [options]
+        \\  install     Install a package (ex: pilo install <package name>)
         \\  list        List all installed packages
-        \\  uninstall   Uninstall a package (ex: trix uninstall <package name>)
-        \\  info        Print information of package (ex: trix info <package name>)
-        \\  moveto      Change a package to specific version (ex: trix moveto <package name> @<version>)
+        \\  uninstall   Uninstall a package (ex: pilo uninstall <package name>)
+        \\  info        Print information of package (ex: pilo info <package name>)
+        \\  moveto      Change a package to specific version (ex: pilo moveto <package name> @<version>)
         
         \\  version     Print version of this package manager
-        \\  upgrage     Upgrade this package manager (ex: trix upgrade @<version>)
+        \\  upgrage     Upgrade this package manager (ex: pilo upgrade @<version>)
     ) catch unreachable;
 }
 
@@ -100,9 +100,9 @@ pub fn main() !void {
                 },
                 .upgrade => {
                     if (args.next()) |upgrade_version| {
-                        try std_writer.print("upgrade trix to version '{s}'\n", .{upgrade_version});
+                        try std_writer.print("upgrade pilo to version '{s}'\n", .{upgrade_version});
                     } else {
-                        try std_writer.writeAll("upgrade trix to lasted version");
+                        try std_writer.writeAll("upgrade pilo to lasted version");
                     }
                 },
                 .help => {
